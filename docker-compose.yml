@@ -1,0 +1,23 @@
+services:
+
+    mysql:
+        image: mysql
+        volumes:
+            - mysql:/var/lib/mysql
+        ports:
+            - 23306:3306
+        environment:
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD_ROOT}
+            - MYSQL_DATABASE=${DB_DATABASE}
+    phpmyadmin:
+        image: phpmyadmin
+        environment:
+            - PMA_HOST=mysql
+            - PMA_ARBITRARY=1
+        ports:
+            - 8100:80
+volumes:
+    mysql:
+    vendor_data:

@@ -26,7 +26,7 @@ class Usuario extends Authenticatable
         'nombre',
         'email',
         'password',
-         
+
     ];
 
     /**
@@ -58,5 +58,17 @@ class Usuario extends Authenticatable
     {
         return $this->belongsTo(Centro::class, 'id_centro', 'id_centro');
     }
+    protected function nombre(): Attribute
+    {
+        return Attribute::make(
+            set: function (string $value) {
+                // 1. Quitamos los caracteres prohibidos "º" y "."
+                $limpio = str_replace(['º', '.'], '', $value);
 
+                // 2. Ponemos la primera letra de cada palabra en mayúscula
+                return Str::title($limpio);
+            },
+        );
+    }
 }
+
