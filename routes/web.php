@@ -39,10 +39,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/docentes/baja/{dni}', [BajaDocenteController::class, 'destroy'])->name('docente.baja');
     Route::post('/docentes/reactivar/{dni}', [BajaDocenteController::class, 'reactivar'])->name('docente.reactivar');
 
-    // Cambiamos a POST para que sea más fácil de usar en botones simples
-    Route::post('/docentes/baja/{dni}', [BajaDocenteController::class, 'destroy'])->name('docente.baja');
-    Route::post('/docentes/reactivar/{dni}', [BajaDocenteController::class, 'reactivar'])->name('docente.reactivar');
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/establecer-coordinador', [EstablecerCoordinadorController::class, 'index'])
