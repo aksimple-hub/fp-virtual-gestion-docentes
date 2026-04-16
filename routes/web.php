@@ -38,6 +38,10 @@ Route::middleware(['auth'])->group(function () {
     // Cambiamos a POST para que sea más fácil de usar en botones simples
     Route::post('/docentes/baja/{dni}', [BajaDocenteController::class, 'destroy'])->name('docente.baja');
     Route::post('/docentes/reactivar/{dni}', [BajaDocenteController::class, 'reactivar'])->name('docente.reactivar');
+
+    // Cambiamos a POST para que sea más fácil de usar en botones simples
+    Route::post('/docentes/baja/{dni}', [BajaDocenteController::class, 'destroy'])->name('docente.baja');
+    Route::post('/docentes/reactivar/{dni}', [BajaDocenteController::class, 'reactivar'])->name('docente.reactivar');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -113,8 +117,6 @@ Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
         Route::get('centros/{id_centro}/info', [CentroController::class, 'info'])->name('centros.info');
         Route::get('centros/exportar-csv', [CentroController::class, 'exportCentrosCSV'])
         ->name('centros.export.csv');
-
-
 
     });
 });
