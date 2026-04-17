@@ -31,37 +31,34 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/alta-docente', [AltaDocenteController::class, 'store'])
         ->name('alta_docente.store');
     Route::get('/comprobar-docente/{dni}', [AltaDocenteController::class, 'comprobarDocente']);
-    // Ruta para reactivar a un docente que está de baja
-    Route::post('/baja-docente/{dni}/reactivar', [App\Http\Controllers\BajaDocenteController::class, 'reactivar'])
-        ->name('docente.reactivar');
 
     // Cambiamos a POST para que sea más fácil de usar en botones simples
     Route::post('/docentes/baja/{dni}', [BajaDocenteController::class, 'destroy'])->name('docente.baja');
     Route::post('/docentes/reactivar/{dni}', [BajaDocenteController::class, 'reactivar'])->name('docente.reactivar');
-
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/establecer-coordinador', [EstablecerCoordinadorController::class, 'index'])
-    ->name('establecer_coordinador.index');
+        ->name('establecer_coordinador.index');
 
     Route::post('/establecer-coordinador', [EstablecerCoordinadorController::class, 'store'])
-    ->name('establecer_coordinador.store');
+        ->name('establecer_coordinador.store');
 
     Route::delete('/establecer-coordinador/{id}', [EstablecerCoordinadorController::class, 'destroy'])
-    ->name('establecer_coordinador.destroy');
+        ->name('establecer_coordinador.destroy');
 });
 
 
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/establecer-tutor', [EstablecerTutorController::class, 'index'])
-    ->name('establecer_tutor.index');
+        ->name('establecer_tutor.index');
 
     Route::post('/establecer-tutor', [EstablecerTutorController::class, 'store'])
-    ->name('establecer_tutor.store');
+        ->name('establecer_tutor.store');
 
     Route::delete('/tutor/{id}', [EstablecerTutorController::class, 'destroy'])
-    ->name('tutor.destroy');
+        ->name('tutor.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -107,15 +104,18 @@ Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
         Route::get('docentes', [DocenteController::class, 'index'])->name('docentes');
         Route::get('docentes/{dni}/info', [DocenteController::class, 'info'])->name('docentes.info');
         Route::get('docentes/exportar-csv', [DocenteController::class, 'exportDocentesCSV'])
-        ->name('docentes.export.csv');
+            ->name('docentes.export.csv');
 
         Route::get('centros', [CentroController::class, 'index'])->name('centros');
         Route::get('centros/{id_centro}/info', [CentroController::class, 'info'])->name('centros.info');
         Route::get('centros/exportar-csv', [CentroController::class, 'exportCentrosCSV'])
-        ->name('centros.export.csv');
+            ->name('centros.export.csv');
+
+
 
     });
 });
 
 
 require __DIR__.'/auth.php';
+
