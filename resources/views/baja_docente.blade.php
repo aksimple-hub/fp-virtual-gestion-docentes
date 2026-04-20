@@ -1,4 +1,4 @@
-git add .<x-app-layout>
+<x-app-layout>
     @push('styles')
         <link rel="stylesheet" href="{{ asset('css/establecerCoordinadorTutorDocencia.css') }}">
     @endpush
