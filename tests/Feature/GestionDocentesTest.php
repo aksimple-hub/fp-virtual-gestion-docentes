@@ -9,6 +9,7 @@ uses(RefreshDatabase::class);
 
 /** 1. ACCESIBILIDAD */
 test('la página de alta de docente es accesible para usuarios autenticados', function () {
+    $this->withoutVite();
     $centro = Centro::forceCreate(['id_centro' => 'C100', 'nombre' => 'Centro Test']);
     $usuario = Usuario::factory()->create(['id_centro' => 'C100']);
     $response = $this->actingAs($usuario)->get('/alta-docente');
