@@ -12,7 +12,7 @@ class Docente extends Model
     use HasFactory;
 
     // Especificamos qué campos son asignables masivamente
-    protected $fillable = ['dni', 'nombre', 'apellido', 'email_virtual', 'de_baja'];
+    protected $fillable = ['dni', 'nombre', 'apellido', 'email_virtual', 'formacion', 'de_baja'];
 
 
 public function centros()
@@ -60,7 +60,7 @@ public function centros()
     {
         return CentroDocente::where('dni', $this->dni)
             ->where('id_centro', $idCentro)
-            ->value('email'); 
+            ->value('email');
     }
 
 

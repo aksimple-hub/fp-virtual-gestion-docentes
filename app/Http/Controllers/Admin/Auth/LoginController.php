@@ -21,10 +21,22 @@ class LoginController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (Auth::guard('admin')->attempt([
-            'user' => $credentials['user'],
+        // Intentar login por nombre
+        $loginByName = Auth::guard('admin')->attempt([
+            'nombre' => $credentials['user'],
             'password' => $credentials['password']
-        ], $request->boolean('remember'))) {
+        ], $request->boolean('remember'));
+
+        // Intentar login por email si el anterior falla
+        $loginByEmail = false;
+        if (!$loginByName && filter_var($credentials['user'], FILTER_VALIDATE_EMAIL)) {
+            $loginByEmail = Auth::guard('admin')->attempt([
+                'email' => $credentials['user'],
+                'password' => $credentials['password']
+            ], $request->boolean('remember'));
+        }
+
+        if ($loginByName || $loginByEmail) {
             $request->session()->regenerate();
             return redirect()->intended(route('admin.dashboard'));
         }
