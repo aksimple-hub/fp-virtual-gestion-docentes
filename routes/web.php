@@ -13,17 +13,19 @@ use App\Http\Controllers\Admin\CentroController;
 
 Route::redirect('/', '/login');
 
-
+// Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Perfiles
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Docente
 Route::middleware(['auth'])->group(function () {
     Route::get('/alta-docente', [AltaDocenteController::class, 'create'])
         ->name('alta_docente');
@@ -35,8 +37,12 @@ Route::middleware(['auth'])->group(function () {
     // Cambiamos a POST para que sea más fácil de usar en botones simples
     Route::post('/docentes/baja/{dni}', [BajaDocenteController::class, 'destroy'])->name('docente.baja');
     Route::post('/docentes/reactivar/{dni}', [BajaDocenteController::class, 'reactivar'])->name('docente.reactivar');
+    
+    Route::get('/docentes/baja', [BajaDocenteController::class, 'index'])->name('docentes.index');
+    Route::delete('/docentes/baja/{dni}', [BajaDocenteController::class, 'destroy'])->name('docentes.destroy');
 });
 
+// Coordinador
 Route::middleware(['auth'])->group(function () {
     Route::get('/establecer-coordinador', [EstablecerCoordinadorController::class, 'index'])
         ->name('establecer_coordinador.index');
@@ -49,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
+// Tutor
 Route::middleware(['auth'])->group(function () {
     Route::get('/establecer-tutor', [EstablecerTutorController::class, 'index'])
         ->name('establecer_tutor.index');
@@ -61,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('tutor.destroy');
 });
 
+// Docencia
 Route::middleware(['auth'])->group(function () {
     Route::get('/establecer-docencia', [EstablecerDocenciaController::class, 'index'])
         ->name('establecer_docencia.index');
@@ -75,12 +82,8 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/docentes/baja', [BajaDocenteController::class, 'index'])->name('docentes.index');
-    Route::delete('/docentes/baja/{dni}', [BajaDocenteController::class, 'destroy'])->name('docentes.destroy');
-});
 
-
+// Admin
 Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
     // Ruta /admin que muestra login si no está logueado, o redirige al dashboard si está autenticado
     Route::get('/', function () {

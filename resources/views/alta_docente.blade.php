@@ -110,6 +110,7 @@
             const dniInput = document.getElementById('dni');
             const nombreInput = document.getElementById('nombre');
             const apellidoInput = document.getElementById('apellido');
+            const emailInput = document.getElementById('email');
             const toggleNombre = document.getElementById('toggle-nombre');
             const toggleApellido = document.getElementById('toggle-apellido');
 
@@ -175,8 +176,13 @@
                             toggleNombre.style.display = 'inline';
                             toggleApellido.style.display = 'inline';
 
-                            // Mostrar notificación bonita en lugar de alert
-                            showToast(`Datos autocompletados: ${data.nombre} ${data.apellido}`);
+                            // Rellenar el email con el valor actual de BD (editable por el usuario)
+                            if (data.email) {
+                                emailInput.value = data.email;
+                            }
+
+                            // Mostrar notificación con aviso de revisión de email
+                            showToast(`Docente encontrado. Revisa y corrige el email si es necesario.`);
                         } else {
                             [nombreInput, apellidoInput].forEach(input => {
                                 input.value = '';

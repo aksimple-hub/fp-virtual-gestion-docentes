@@ -34,7 +34,7 @@ class AltaDocenteController extends Controller
     {
         // 1. Validamos que el profesor esté y que haya al menos un módulo seleccionado
         $request->validate([
-            'dni' => 'required|string|max:10|unique:docentes,dni',
+            'dni' => 'required|string|max:10',
             'email' => 'required|email',
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -59,15 +59,9 @@ class AltaDocenteController extends Controller
                 },
             ],
 
-            //Comprueba si el email existe
             'email' => [
                 'required',
                 'email',
-                function ($attribute, $value, $fail) {
-                    if (CentroDocente::where('email', $value)->exists()) {
-                        $fail('Este correo electrónico ya está registrado.');
-                    }
-                },
             ],
 
             'nombre' => 'required|string|max:255',
@@ -106,7 +100,7 @@ class AltaDocenteController extends Controller
                 }
             }
             if ($docente) {
-                // Si el nombre o apellido han cambiado, actualizarlos
+                // Si el nombre, apellido o email han cambiado, actualizarlos
                 $nombreNuevo = $this->normalizarNombreYApellido($request->nombre);
                 $apellidoNuevo = $this->normalizarNombreYApellido($request->apellido);
 
@@ -119,6 +113,12 @@ class AltaDocenteController extends Controller
 
                 if ($docente->apellido !== $apellidoNuevo) {
                     $docente->apellido = $apellidoNuevo;
+                    $actualizado = true;
+                }
+
+                // Actualizar el email si el usuario lo ha corregido
+                if ($docente->email_virtual !== $request->email) {
+                    $docente->email_virtual = $request->email;
                     $actualizado = true;
                 }
 
